@@ -3,6 +3,8 @@
  */
 package lemon.clown.utils.datastructure.tree.findset;
 
+import lemon.clown.utils.datastructure.tree.findset.FindSet;
+
 /**
  * 并查集
  */
