@@ -1,5 +1,6 @@
 package lemon.clown.utils.algorithm.sort;
 
+import lemon.clown.utils.algorithm.sort.Sort;
 
 /**
  * 优化的排序（在区间长度很短时使用插入排序）

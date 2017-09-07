@@ -5,6 +5,8 @@ package lemon.clown.utils.algorithm.sort;
 
 import java.util.Comparator;
 import java.util.Random;
+import lemon.clown.utils.algorithm.sort.OptimizeSort;
+import lemon.clown.utils.algorithm.sort.AssistanceOptimizeSort;
 
 public class QuickOptimizeSort<T> implements OptimizeSort<T> {
     private Random random = new Random();
@@ -27,8 +29,8 @@ public class QuickOptimizeSort<T> implements OptimizeSort<T> {
     @Override
     public void sort(T[] targets, int offset, int length) {
         int end = offset + length;
-        assert offset >= 0 && offset < targets.length && end < targets.length
-                : "Out of bound of array";
+        assert length >= 1 && offset >= 0 && offset < targets.length && end <= targets.length
+                : "Out of bound of array:\nlength: " + targets.length + ", end: " + end;
         if( length > 1 ) quickOptimizeSort(targets, offset, end);
     }
 

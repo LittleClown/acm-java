@@ -4,6 +4,7 @@
 package lemon.clown.utils.algorithm.sort;
 
 import java.util.Comparator;
+import lemon.clown.utils.algorithm.sort.Sort;
 
 /**
  * 优化排序

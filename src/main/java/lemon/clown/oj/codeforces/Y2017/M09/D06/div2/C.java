@@ -1,5 +1,13 @@
 /*~
- *  Created by lemon-clown on 2017/9/7
+ * ***[Round#433 Div2 C](http://codeforces.com/contest/854/problem/C)***
+ *
+ * tag:
+ *  - 排序
+ *  - 贪心
+ *  - 并查集
+ *
+ * Solution:
+ *  按 cost 从大到小排序，贪心+并查集
  */
 package lemon.clown.oj.codeforces.Y2017.M09.D06.div2;
 
@@ -68,7 +76,7 @@ public class C {
         });
         sort.sort(items, 1, N);
 
-        FindSetImp fs = new FindSetImp(N*2);
+        FindSetImp fs = new FindSetImp(N*2+10);
         fs.init(K+1, N+K+1);
 
         int[] orders = new int[N+1];
@@ -86,9 +94,9 @@ public class C {
             fs.union(rt, pos+1);
         }
 
-        System.out.println(ans);
-        System.out.print(orders[1]);
-        for(int i=2; i <= N; ++i) System.out.print(" " + orders[i]);
-        System.out.println();
+        StringBuilder out = new StringBuilder();
+        out.append(ans).append('\n').append(orders[1]);
+        for(int i=2; i <= N; ++i) out.append(' ').append(orders[i]);
+        System.out.println(out);
     }
 }
