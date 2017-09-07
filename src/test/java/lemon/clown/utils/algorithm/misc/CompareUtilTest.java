@@ -4,25 +4,25 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class CompareTest {
+public class CompareUtilTest {
     @Test
     public void min() throws Exception {
-        assertEquals(3, Compare.min(12, 3));
+        assertEquals(3, CompareUtil.min(12, 3));
     }
 
     @Test
     public void max() throws Exception {
-        assertEquals(15, Compare.max(1, 15));
+        assertEquals(15, CompareUtil.max(1, 15));
     }
 
     @Test
     public void min1() throws Exception {
-        assertEquals(13.2, Compare.min(111.1, 13.2), 1e9);
+        assertEquals(13.2, CompareUtil.min(111.1, 13.2), 1e9);
     }
 
     @Test
     public void max1() throws Exception {
-        assertEquals(111.1, Compare.max(111.1, 13.2), 1e9);
+        assertEquals(111.1, CompareUtil.max(111.1, 13.2), 1e9);
     }
 
 
@@ -48,22 +48,22 @@ public class CompareTest {
 
     @Test
     public void min2() throws Exception {
-        assertEquals(a, Compare.min(a, b));
-        assertEquals(a, Compare.min(a, c));
-        assertEquals(a, Compare.min(a, d));
-        assertEquals(b, Compare.min(b, c));
-        assertEquals(b, Compare.min(b, d));
-        assertEquals(c, Compare.min(c, d));
+        assertEquals(a, CompareUtil.min(a, b));
+        assertEquals(a, CompareUtil.min(a, c));
+        assertEquals(a, CompareUtil.min(a, d));
+        assertEquals(b, CompareUtil.min(b, c));
+        assertEquals(b, CompareUtil.min(b, d));
+        assertEquals(c, CompareUtil.min(c, d));
     }
 
     @Test
     public void max2() throws Exception {
-        assertEquals(b, Compare.max(a, b));
-        assertEquals(c, Compare.max(a, c));
-        assertEquals(d, Compare.max(a, d));
-        assertEquals(c, Compare.max(b, c));
-        assertEquals(d, Compare.max(b, d));
-        assertEquals(d, Compare.max(c, d));
+        assertEquals(b, CompareUtil.max(a, b));
+        assertEquals(c, CompareUtil.max(a, c));
+        assertEquals(d, CompareUtil.max(a, d));
+        assertEquals(c, CompareUtil.max(b, c));
+        assertEquals(d, CompareUtil.max(b, d));
+        assertEquals(d, CompareUtil.max(c, d));
     }
 
 }

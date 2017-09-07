@@ -3,7 +3,7 @@
  */
 package lemon.clown.utils.algorithm.misc;
 
-public class Compare {
+public class CompareUtil {
     public static int min(int a, int b) {
         return a < b? a: b;
     }

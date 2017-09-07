@@ -11,7 +11,7 @@
  */
 package lemon.clown.oj.codeforces.Y2017.M09.D06.div2;
 
-import lemon.clown.utils.algorithm.misc.Compare;
+import lemon.clown.utils.algorithm.misc.CompareUtil;
 import lemon.clown.utils.algorithm.sort.MergeSort;
 import lemon.clown.utils.algorithm.sort.Sort;
 import lemon.clown.utils.datastructure.tree.findset.HeuristicFindSet;
@@ -46,7 +46,7 @@ public class C_merge_sort_version {
 
         for(int i=1; i <= N; ++i) {
             Item item = items[i];
-            int pos = Compare.max(item.idx, K+1);
+            int pos = CompareUtil.max(item.idx, K+1);
             int rt = fs.getRoot(pos);
 
             pos = fs.mx[rt];
@@ -86,11 +86,11 @@ public class C_merge_sort_version {
             if( cnt[rx] < cnt[ry] ) {
                 f[rx] = ry;
                 cnt[ry] += cnt[rx];
-                mx[ry] = Compare.max(mx[rx], mx[ry]);
+                mx[ry] = CompareUtil.max(mx[rx], mx[ry]);
             } else {
                 f[ry] = rx;
                 cnt[rx] += cnt[ry];
-                mx[rx] = Compare.max(mx[rx], mx[ry]);
+                mx[rx] = CompareUtil.max(mx[rx], mx[ry]);
             }
         }
     }
