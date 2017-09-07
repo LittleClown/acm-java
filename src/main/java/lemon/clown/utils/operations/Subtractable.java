@@ -3,7 +3,13 @@
  */
 package lemon.clown.utils.operations;
 
-public interface Subtractable<T extends Subtractable<T>> {
+import lemon.clown.utils.operations.Accumulable;
+
+/**
+ * 继承此接口的类可进行减法操作
+ * @param <T>
+ */
+public interface Subtractable<T extends Subtractable<T>> extends Accumulable<T> {
     /**
      * 减法操作
      * @param x
@@ -12,11 +18,11 @@ public interface Subtractable<T extends Subtractable<T>> {
     T subtract(T x);
 
     /**
-     * 乘以常数
-     * @param times     times must greater than 0
+     * 减法操作，并用计算结果更新自身
+     * @param x
      * @return
      */
-    T multiply(int times);
+    T subtractAndSet(T x);
 
     /**
      * 返回相反数

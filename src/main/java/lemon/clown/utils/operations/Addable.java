@@ -1,6 +1,12 @@
 package lemon.clown.utils.operations;
 
-public interface Addable<T extends Addable<T>> {
+import lemon.clown.utils.operations.Accumulable;
+
+/**
+ * 继承此接口的类可执行加法操作
+ * @param <T>
+ */
+public interface Addable<T extends Addable<T>> extends Accumulable<T> {
     /**
      * 加法操作
      * @param x
@@ -9,9 +15,9 @@ public interface Addable<T extends Addable<T>> {
     T add(T x);
 
     /**
-     * 乘以常数
-     * @param times     times must greater than 0
+     * 加法操作，并用计算结果更新自身
+     * @param x
      * @return
      */
-    T multiply(int times);
+    T addAndSet(T x);
 }

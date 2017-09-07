@@ -64,7 +64,7 @@ public class SimpleBIT<T extends Addable<T> & Subtractable<T> & ZeroElement<T>> 
     public T sum(int x) {
         T ret = instance.getZeroElement();
         for(; x > 0; x^=BIT.lower_bit(x))
-            ret = ret.add(nodes[x]);
+            ret.addAndSet(nodes[x]);
         return ret;
     }
 
@@ -76,7 +76,8 @@ public class SimpleBIT<T extends Addable<T> & Subtractable<T> & ZeroElement<T>> 
     @Override
     public void add(int x, T v) {
         if( x <= 0 ) return;
-        for(; x <= N; x+=BIT.lower_bit(x)) nodes[x] = nodes[x].add(v);
+        for(; x <= N; x+=BIT.lower_bit(x))
+            nodes[x].addAndSet(v);
     }
 
     @Override

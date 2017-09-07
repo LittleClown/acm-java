@@ -61,13 +61,31 @@ public class P1166 {
         }
 
         @Override
+        public A addAndSet(A x) {
+            value += x.value;
+            return this;
+        }
+
+        @Override
         public A subtract(A x) {
             return new A(value - x.value);
         }
 
         @Override
+        public A subtractAndSet(A x) {
+            value -= x.value;
+            return this;
+        }
+
+        @Override
         public A multiply(int times) {
             return new A(value * times);
+        }
+
+        @Override
+        public A multiplyAndSet(int times) {
+            value *= times;
+            return this;
         }
 
         @Override
