@@ -3,11 +3,9 @@
  */
 package lemon.clown.utils.algorithm.math.mod;
 
-public class Mod {
-    public static int GCD(int a, int b) {
-        return b != 0? GCD(b, a%b): a;
-    }
+import lemon.clown.utils._classes.misc.triple.Triple;
 
+public class Power {
     public static int Power(int a, int x, int MOD) {
         int ans = 1;
         for(; x > 0; x>>=1, a=a*a%MOD)

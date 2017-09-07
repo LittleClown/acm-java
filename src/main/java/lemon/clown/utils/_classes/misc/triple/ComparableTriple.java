@@ -12,6 +12,10 @@ package lemon.clown.utils._classes.misc.triple;
 public class ComparableTriple<A extends Comparable<A>, B extends Comparable<B>, C extends Comparable<C>>
     extends Triple<A, B, C> implements Comparable<ComparableTriple<A, B, C>> {
 
+    public ComparableTriple() {
+        super();
+    }
+
     public ComparableTriple(A a, B b, C c) {
         super(a, b, c);
     }

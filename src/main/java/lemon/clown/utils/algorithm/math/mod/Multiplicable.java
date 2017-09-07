@@ -1,7 +1,7 @@
 package lemon.clown.utils.algorithm.math.mod;
 
 /**
- * 重载此接口以支持 Mod.Power 方法
+ * 重载此接口以支持 Power.Power 方法
  * @param <T>
  * @param <M>
  */

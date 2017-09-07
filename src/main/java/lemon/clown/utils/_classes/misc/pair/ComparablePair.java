@@ -11,6 +11,10 @@ package lemon.clown.utils._classes.misc.pair;
 public class ComparablePair<A extends Comparable<A>, B extends Comparable<B>>
         extends Pair<A, B> implements Comparable<ComparablePair<A, B>> {
 
+    public ComparablePair() {
+        super();
+    }
+
     public ComparablePair(A a, B b) {
         super(a, b);
     }

@@ -14,6 +14,8 @@ public class Triple<A, B, C> {
     public B second;
     public C third;
 
+    public Triple() {};
+
     public Triple(A a, B b, C c) {
         first = a;
         second = b;
