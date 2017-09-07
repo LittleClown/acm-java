@@ -11,15 +11,13 @@
  */
 package lemon.clown.oj.codeforces.Y2017.M09.D06.div2;
 
-
 import lemon.clown.utils.algorithm.misc.Compare;
-import lemon.clown.utils.algorithm.sort.QuickSort;
+import lemon.clown.utils.algorithm.sort.MergeSort;
 import lemon.clown.utils.algorithm.sort.Sort;
 import lemon.clown.utils.datastructure.tree.findset.HeuristicFindSet;
 import lemon.clown.utils.io.Scanner;
 
-
-public class C {
+public class C_merge_sort_version {
     static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -34,9 +32,10 @@ public class C {
             items[i] = item;
         }
 
-        Sort<Item> sort = new QuickSort<Item>((Item a, Item b)-> {
+        Sort<Item> sort = new MergeSort<>((Item a, Item b)-> {
             return b.cost - a.cost;
         });
+        ((MergeSort) sort).setAssistArray(Item.class, items.length);
         sort.sort(items, 1, N);
 
         FindSetImp fs = new FindSetImp(N*2+10);
