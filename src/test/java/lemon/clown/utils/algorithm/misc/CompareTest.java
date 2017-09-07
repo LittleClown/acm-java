@@ -1,4 +1,4 @@
-package lemon.clown.algorithm.misc;
+package lemon.clown.utils.algorithm.misc;
 
 import org.junit.Test;
 

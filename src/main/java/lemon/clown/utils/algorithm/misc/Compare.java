@@ -1,7 +1,7 @@
 /*~
  *  Created by lemon-clown on 2017/9/6
  */
-package lemon.clown.algorithm.misc;
+package lemon.clown.utils.algorithm.misc;
 
 public class Compare {
     public static int min(int a, int b) {
@@ -9,6 +9,14 @@ public class Compare {
     }
 
     public static int max(int a, int b) {
+        return a > b? a: b;
+    }
+
+    public static long min(long a, long b) {
+        return a < b? a: b;
+    }
+
+    public static long max(long a, long b) {
         return a > b? a: b;
     }
 
