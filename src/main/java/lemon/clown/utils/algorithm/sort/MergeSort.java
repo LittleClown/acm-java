@@ -7,6 +7,10 @@ import java.lang.reflect.Array;
 import java.util.Comparator;
 import lemon.clown.utils.algorithm.sort.Sort;
 
+/**
+ * 归并排序
+ * @param <T>
+ */
 public class MergeSort<T> implements Sort<T> {
     private Comparator<T> comparator;
     private T[] assist_array;
@@ -15,6 +19,11 @@ public class MergeSort<T> implements Sort<T> {
 
     public MergeSort(Comparator<T> comparator) {
         setComparator(comparator);
+    }
+
+    public MergeSort(Comparator<T> comparator, Class<T> classType, int size) {
+        setComparator(comparator);
+        setAssistArray(classType, size);
     }
 
     @Override
