@@ -7,17 +7,17 @@ import lemon.clown.utils.datastructure.tree.bst.node.BSTNode;
 
 import java.util.Random;
 
-public class TreapNode<T> extends BSTNode<TreapNode<T>> {
+public class TreapNode<VALUE> extends BSTNode<TreapNode<VALUE>> {
     private static final Random random = new Random();
 
     protected int rank;
-    public T value;
+    public VALUE value;
 
     public TreapNode() {
         rank = random.nextInt();
     }
 
-    public TreapNode(T value) {
+    public TreapNode(VALUE value) {
         this();
         this.value = value;
     }

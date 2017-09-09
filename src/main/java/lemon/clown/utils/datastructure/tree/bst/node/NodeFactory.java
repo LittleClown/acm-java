@@ -2,25 +2,30 @@ package lemon.clown.utils.datastructure.tree.bst.node;
 
 import lemon.clown.utils.datastructure.tree.bst.node.BSTNode;
 
-public interface NodeFactory<E, T extends BSTNode<T>> {
+/**
+ * Node 工厂
+ * @param <VALUE>   BST 维护的 value 的类型
+ * @param <NODE>    BST 节点类型
+ */
+public interface NodeFactory<VALUE, NODE extends BSTNode<NODE>> {
     /**
      * 创建新节点
      * @return
      */
-    T newNode();
+    NODE newNode();
 
     /**
      * 创建新节点
      * @param value     In:     新节点的 value
      * @return          新节点
      */
-    T newNode(E value);
+    NODE newNode(VALUE value);
 
     /**
      * 创建新根节点
      * @return          新的根节点
      */
-    default T newRoot() {
+    default NODE newRoot() {
         return newNode(null);
     }
 
@@ -29,12 +34,12 @@ public interface NodeFactory<E, T extends BSTNode<T>> {
      * @param o         In:     待初始化节点
      * @param value     In:     待初始化节点值
      */
-    default void initNode(T o, E value) {}
+    default void initNode(NODE o, VALUE value) {}
 
     /**
      * 初始化根节点
      */
-    default void initRoot(T root) {
+    default void initRoot(NODE root) {
         root.son[0] = null;
     }
 
