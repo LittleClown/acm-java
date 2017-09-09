@@ -1,7 +1,7 @@
 /*~
  *  Created by lemon-clown on 2017/9/9
  */
-package lemon.clown.utils.datastructure.tree.bst;
+package lemon.clown.utils.datastructure.tree.bst.node;
 
 /**
  * 平衡二叉树的节点接口

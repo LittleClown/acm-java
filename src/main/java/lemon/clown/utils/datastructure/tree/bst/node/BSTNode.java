@@ -1,7 +1,9 @@
 /*~
  *  Created by lemon-clown on 2017/9/9
  */
-package lemon.clown.utils.datastructure.tree.bst;
+package lemon.clown.utils.datastructure.tree.bst.node;
+
+import lemon.clown.utils.datastructure.tree.bst.node.Node;
 
 /**
  * Node 接口的简单实现，只有树结构，节点没有维护任何值

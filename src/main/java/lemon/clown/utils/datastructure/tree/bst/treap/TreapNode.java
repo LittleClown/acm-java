@@ -3,7 +3,7 @@
  */
 package lemon.clown.utils.datastructure.tree.bst.treap;
 
-import lemon.clown.utils.datastructure.tree.bst.BSTNode;
+import lemon.clown.utils.datastructure.tree.bst.node.BSTNode;
 
 import java.util.Random;
 
