@@ -11,6 +11,7 @@ import sys
 import clipboard
 
 
+src_packages = 'clown'
 paths = [
     r'/d/workspace/inWindows/forJava/JetBrains/personal/acm/src/main/java',
     r'D:\workspace\inWindows\forJava\JetBrains\personal\acm\src\main\java'
@@ -163,7 +164,6 @@ def main():
     target_name = os.path.splitext(suffix)[0]
     # dest = os.path.join(prefix, 'Main_'+suffix)
 
-    src_packages = 'clown'
     dest = os.path.join(prefix.split(src_packages)[0], src_packages, 'Main.java')
     # dest = os.path.join(dest, 'Main.java')
 
