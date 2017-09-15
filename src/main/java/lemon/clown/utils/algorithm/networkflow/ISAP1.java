@@ -12,12 +12,9 @@ import java.util.List;
 
 public class ISAP1 extends ISAP {
     /**
-     * m:               边数
-     * current_flow:    当前参与网络中的流量
-     * edges:           边表。 edges[e] 和 edges[e^1] 互为反向弧
-     * G:               邻接表。 G[i][j] 表示节点 i 的第 j 条边在 edges 数组中的序号
+     * edges:   边表。 edges[e] 和 edges[e^1] 互为反向弧
+     * G:       邻接表。 G[i][j] 表示节点 i 的第 j 条边在 edges 数组中的序号
      */
-    protected int m, current_flow;
     protected final List<Edge> edges = new ArrayList<>();
     protected final List<Integer>[] G;
 
@@ -34,7 +31,6 @@ public class ISAP1 extends ISAP {
     @Override
     public void init(int source, int converge, int N) {
         super.init(source, converge, N);
-        current_flow = 0;
         edges.clear();
         for(int i=0; i < n; ++i) G[i].clear();
     }
@@ -90,9 +86,7 @@ public class ISAP1 extends ISAP {
         return current_flow = ans;
     }
 
-    /**
-     * 计算层次图： dist 的值
-     */
+    @Override
     protected void BFS() {
         Arrays.fill(dist, 0, n, INF);
         dist[t] = 0;
@@ -111,10 +105,7 @@ public class ISAP1 extends ISAP {
         }
     }
 
-    /**
-     * 增广操作，让这条增广路满流
-     * @return  增广路的流量
-     */
+    @Override
     protected int augment() {
         int mif = INF;
         for(int o=t; o != s;) {

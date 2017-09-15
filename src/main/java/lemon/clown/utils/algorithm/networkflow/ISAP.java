@@ -22,12 +22,13 @@ public abstract class ISAP implements NetworkFlow {
     protected final int[] Q;
 
     /**
-     * s:   源点
-     * t:   汇点
-     * m:   边数
-     * n:   节点数
+     * s:               源点
+     * t:               汇点
+     * m:               边数
+     * n:               节点数
+     * current_flow:    当前残余网络的流量
      */
-    protected int s, t, n;
+    protected int s, t, m, n, current_flow;
 
     public ISAP(int MAXN, int INF) {
         this.INF = INF;
@@ -55,5 +56,17 @@ public abstract class ISAP implements NetworkFlow {
         s = source;
         t = converge;
         this.n = n;
+        m = current_flow = 0;
     }
+
+    /**
+     * 计算层次图： dist 的值
+     */
+    abstract protected void BFS();
+
+    /**
+     * 增广操作，让这条增广路满流
+     * @return  增广路的流量
+     */
+    abstract protected int augment();
 }
