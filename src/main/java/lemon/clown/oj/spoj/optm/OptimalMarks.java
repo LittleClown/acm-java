@@ -4,7 +4,6 @@
 package lemon.clown.oj.spoj.optm;
 
 import lemon.clown.utils.algorithm.networkflow.Edge;
-import lemon.clown.utils.algorithm.networkflow.ISAP_Faster;
 import lemon.clown.utils.io.Scanner;
 
 import java.util.Arrays;
@@ -91,7 +90,7 @@ public class OptimalMarks {
         System.out.println(out);
     }
 
-    static class ISAP2 extends ISAP_Faster {
+    static class ISAP2 extends lemon.clown.utils.algorithm.networkflow.ISAP2 {
         int[] marks;
         boolean[] vis;
         public ISAP2(int maxn, int maxe, int[] marks) {

@@ -4,11 +4,9 @@
 package lemon.clown.utils.algorithm.networkflow;
 
 import lemon.clown.utils.datastructure.list.ChainForward;
-
 import java.util.Arrays;
 
-
-public class ISAP_Faster {
+public class ISAP2 extends ISAP {
     /**
      * INF:     infinity
      * MAXN:    最大的节点个数
@@ -37,9 +35,9 @@ public class ISAP_Faster {
      * t:    汇点
      * n:    节点数
      */
-    protected int s, t, n;
+    protected int s, t, n, current_flow;
 
-    public ISAP_Faster(int INF, int MAXN, int MAXE) {
+    public ISAP2(int MAXN, int MAXE, int INF) {
         this.INF = INF;
         this.MAXN = MAXN;
         this.MAXE = MAXE * 2;
@@ -54,54 +52,32 @@ public class ISAP_Faster {
         G = new ChainForward(this.MAXN, this.MAXE);
     }
 
-    public ISAP_Faster(int MAXN, int MAXE) {
-        this(0x3f3f3f3f, MAXN, MAXE);
+    public ISAP2(int MAXN, int MAXE) {
+        this(MAXN, MAXE, 0x3f3f3f3f);
     }
 
-    /**
-     * 初始化成员变量
-     */
-    protected void initIASP() {
-        edgesWrapper.init();
-        G.init();
-    }
-
-    /**
-     * 初始化网络流
-     * @param source        源点
-     * @param converge      汇点
-     * @param N             加上 源点和汇点，网络流节点总个数
-     */
+    @Override
     public void init(int source, int converge, int N) {
         assert N <= MAXN: "N is bigger than maxn. " + N;
         s = source;
         t = converge;
         n = N;
-        initIASP();
+        current_flow = 0;
+        G.init();
+        edgesWrapper.init();
     }
 
-    /**
-     * 沿用此前设置的网络流节点个数，重新设置源点和汇点（需要重新构边）
-     * @param source        源点
-     * @param converge      汇点
-     */
+    @Override
     public void init(int source, int converge) {
         init(source, converge, n);
     }
 
-    /**
-     * 沿用此前的 源点、汇点、网络流节点个数
-     */
+    @Override
     public void init() {
         init(s, t, n);
     }
 
-    /**
-     * 添加边
-     * @param from
-     * @param to
-     * @param cap
-     */
+    @Override
     public void addEdge(int from, int to, int cap) {
         G.addEdge(from, edgesWrapper.size());
         edgesWrapper.addEdge(from, to, cap, 0);
@@ -109,43 +85,7 @@ public class ISAP_Faster {
         edgesWrapper.addEdge(to, from, 0, 0);
     }
 
-    /**
-     * 计算层次图： dist 的值
-     */
-    protected void BFS() {
-        Arrays.fill(dist, 0, n, INF);
-        dist[t] = 0;
-
-        int front = 0, rear = 0;
-        Q[rear++] = t;
-
-        while( front < rear ) {
-            int o = Q[front++];
-            for(int i: G.forEach(o)) {
-                Edge e = edges[i];
-                if( dist[e.to] == INF && e.cap == 0 ) {
-                    dist[e.to] = dist[o] + 1;
-                    Q[rear++] = e.to;
-                }
-            }
-        }
-    }
-
-    protected int augment() {
-        int mif = INF;
-        for(int o=t; o != s;) {
-            Edge e = edges[path[o]];
-            mif = Math.min(mif, e.cap-e.flow);
-            o = e.from;
-        }
-        for(int o=t; o != s;) {
-            edges[path[o]].flow += mif;
-            edges[path[o]^1].flow -= mif;
-            o = edges[path[o]].from;
-        }
-        return mif;
-    }
-
+    @Override
     public int maxFlow() {
         BFS();
         System.arraycopy(G.head, 0, cur, 0, n);
@@ -188,4 +128,43 @@ public class ISAP_Faster {
         }
         return ans;
     }
+
+    /**
+     * 计算层次图： dist 的值
+     */
+    protected void BFS() {
+        Arrays.fill(dist, 0, n, INF);
+        dist[t] = 0;
+
+        int front = 0, rear = 0;
+        Q[rear++] = t;
+
+        while( front < rear ) {
+            int o = Q[front++];
+            for(int i: G.forEach(o)) {
+                Edge e = edges[i];
+                if( dist[e.to] == INF && e.cap == 0 ) {
+                    dist[e.to] = dist[o] + 1;
+                    Q[rear++] = e.to;
+                }
+            }
+        }
+    }
+
+    protected int augment() {
+        int mif = INF;
+        for(int o=t; o != s;) {
+            Edge e = edges[path[o]];
+            mif = Math.min(mif, e.cap-e.flow);
+            o = e.from;
+        }
+        for(int o=t; o != s;) {
+            edges[path[o]].flow += mif;
+            edges[path[o]^1].flow -= mif;
+            o = edges[path[o]].from;
+        }
+        return mif;
+    }
+
+
 }

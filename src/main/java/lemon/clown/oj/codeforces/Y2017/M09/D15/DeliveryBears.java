@@ -7,7 +7,7 @@
  */
 package lemon.clown.oj.codeforces.Y2017.M09.D15;
 
-import lemon.clown.utils.algorithm.networkflow.ISAP;
+import lemon.clown.utils.algorithm.networkflow.ISAP1;
 import lemon.clown.utils.io.Scanner;
 
 public class DeliveryBears {
@@ -19,7 +19,7 @@ public class DeliveryBears {
     static int[] a = new int[MAXN];
     static int[] b = new int[MAXN];
     static int[] c = new int[MAXN];
-    static ISAP isap = new ISAP(MAXN);
+    static ISAP1 isap = new ISAP1(MAXN);
 
     static boolean check(double x) {
         final int source = 0;

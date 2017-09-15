@@ -12,7 +12,12 @@ package lemon.clown.utils.algorithm.networkflow;
 public class Edge {
     public int from, to, cap, flow;
     public Edge() {}
+
     public Edge(int from, int to, int cap, int flow) {
+        set(from, to, cap, flow);
+    }
+
+    public void set(int from, int to, int cap,int flow) {
         this.from = from;
         this.to = to;
         this.cap = cap;
