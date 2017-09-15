@@ -1,28 +1,14 @@
 /*~
- *  Created by lemon-clown on 2017/9/14
+ *  Created by lemon-clown on 2017/9/15
  */
-package lemon.clown.utils.algorithm.network;
+package lemon.clown.utils.algorithm.networkflow;
 
-import java.util.*;
+import lemon.clown.utils.datastructure.list.ChainForward;
 
-public class ISAP {
-    /**
-     * from:    边的起点
-     * to:      边的终点
-     * cpa:     边的容量
-     * flow:    边的流量
-     */
-    public static class Edge {
-        public int from, to, cap, flow;
-        public Edge() {}
-        public Edge(int from, int to, int cap, int flow) {
-            this.from = from;
-            this.to = to;
-            this.cap = cap;
-            this.flow = flow;
-        }
-    }
+import java.util.Arrays;
 
+
+public class ISAP_Faster {
     /**
      * INF:     infinity
      * MAXN:    最大的节点个数
@@ -36,46 +22,48 @@ public class ISAP {
      */
     public final int INF;
     public final int MAXN;
+    public final int MAXE;
     public final int[] cnt;
     public final int[] cur;
     public final int[] path;
     public final int[] dist;
     protected final int[] Q;
-    protected final List<Edge> edges = new ArrayList<>();
-    protected final List<Integer>[] G;
+    protected final EdgesWrapper edgesWrapper;
+    protected final Edge[] edges;
+    protected final ChainForward G;
 
     /**
-     * s:   源点
-     * t:   汇点
-     * m:   边数
-     * n:   节点数
+     * s:    源点
+     * t:    汇点
+     * n:    节点数
      */
-    protected int s, t, m, n;
+    protected int s, t, n;
 
-    public ISAP(int INF, int MAXN) {
+    public ISAP_Faster(int INF, int MAXN, int MAXE) {
         this.INF = INF;
         this.MAXN = MAXN;
-        cnt = new int[MAXN];
-        cur = new int[MAXN];
-        path = new int[MAXN];
-        dist = new int[MAXN];
-        Q = new int[MAXN];
+        this.MAXE = MAXE * 2;
 
-        G = new List[MAXN];
-        for(int i=0; i < MAXN; ++i) G[i] = new ArrayList<>();
+        cnt = new int[this.MAXN];
+        cur = new int[this.MAXN];
+        path = new int[this.MAXN];
+        dist = new int[this.MAXN];
+        Q = new int[this.MAXN];
+        edgesWrapper = new EdgesWrapper(this.MAXE);
+        edges = edgesWrapper.edges;
+        G = new ChainForward(this.MAXN, this.MAXE);
     }
 
-    public ISAP(int MAXN) {
-        this(0x3f3f3f3f, MAXN);
+    public ISAP_Faster(int MAXN, int MAXE) {
+        this(0x3f3f3f3f, MAXN, MAXE);
     }
 
     /**
      * 初始化成员变量
      */
     protected void initIASP() {
-        m = 0;
-        for(int i=0; i < n; ++i) G[i].clear();
-        edges.clear();
+        edgesWrapper.init();
+        G.init();
     }
 
     /**
@@ -115,10 +103,10 @@ public class ISAP {
      * @param cap
      */
     public void addEdge(int from, int to, int cap) {
-        edges.add(new Edge(from, to, cap, 0));
-        edges.add(new Edge(to, from, 0, 0));
-        G[from].add(m++);
-        G[to].add(m++);
+        G.addEdge(from, edgesWrapper.size());
+        edgesWrapper.addEdge(from, to, cap, 0);
+        G.addEdge(to, edgesWrapper.size());
+        edgesWrapper.addEdge(to, from, 0, 0);
     }
 
     /**
@@ -133,8 +121,8 @@ public class ISAP {
 
         while( front < rear ) {
             int o = Q[front++];
-            for(int i: G[o]) {
-                Edge e = edges.get(i);
+            for(int i: G.forEach(o)) {
+                Edge e = edges[i];
                 if( dist[e.to] == INF && e.cap == 0 ) {
                     dist[e.to] = dist[o] + 1;
                     Q[rear++] = e.to;
@@ -146,21 +134,21 @@ public class ISAP {
     protected int augment() {
         int mif = INF;
         for(int o=t; o != s;) {
-            Edge e = edges.get(path[o]);
+            Edge e = edges[path[o]];
             mif = Math.min(mif, e.cap-e.flow);
             o = e.from;
         }
         for(int o=t; o != s;) {
-            edges.get(path[o]).flow += mif;
-            edges.get(path[o]^1).flow -= mif;
-            o = edges.get(path[o]).from;
+            edges[path[o]].flow += mif;
+            edges[path[o]^1].flow -= mif;
+            o = edges[path[o]].from;
         }
         return mif;
     }
 
     public int maxFlow() {
         BFS();
-        Arrays.fill(cur, 0, n, 0);
+        System.arraycopy(G.head, 0, cur, 0, n);
         Arrays.fill(cnt, 0, n, 0);
         for(int i=0; i < n; ++i)
             if( dist[i] < n ) ++cnt[dist[i]];
@@ -173,12 +161,13 @@ public class ISAP {
             }
 
             boolean flag = false;
-            for(int i=cur[o]; i < G[o].size(); ++i) {
-                Edge e = edges.get(G[o].get(i));
+            for(int i: G.forRemainWithIndex(cur[o])) {
+                int v = G.val[i];
+                Edge e = edges[v];
                 if( e.cap > e.flow && dist[o] == dist[e.to]+1 ) { // Advance
                     flag = true;
                     cur[o] = i;
-                    path[e.to] = G[o].get(i);
+                    path[e.to] = v;
                     o = e.to;
                     break;
                 }
@@ -186,15 +175,15 @@ public class ISAP {
 
             if( !flag ) {   // Retreat
                 int d = n - 1;
-                for(int i: G[o]) {
-                    Edge e = edges.get(i);
+                for(int i: G.forEach(o)) {
+                    Edge e = edges[i];
                     if( e.cap > e.flow ) d = Math.min(d, dist[e.to]);
                 }
                 // gap 优化
                 if( --cnt[dist[o]] == 0 ) break;
                 ++cnt[ dist[o]=d+1 ];
-                cur[o] = 0;
-                if( o != s ) o = edges.get(path[o]).from;
+                cur[o] = G.head[o];
+                if( o != s ) o = edges[path[o]].from;
             }
         }
         return ans;

@@ -88,7 +88,7 @@ public class ChainForward {
             public Integer next() {
                 int ret = ct;
                 ct = next[ct];
-                return ct;
+                return ret;
             }
         };
     }

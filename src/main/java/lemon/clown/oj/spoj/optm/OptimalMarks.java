@@ -3,7 +3,8 @@
  */
 package lemon.clown.oj.spoj.optm;
 
-import lemon.clown.utils.algorithm.network.ISAP;
+import lemon.clown.utils.algorithm.networkflow.Edge;
+import lemon.clown.utils.algorithm.networkflow.ISAP_Faster;
 import lemon.clown.utils.io.Scanner;
 
 import java.util.Arrays;
@@ -22,7 +23,7 @@ public class OptimalMarks {
     static int[] marks = new int[MAXN];
     static int[] G = new int[MAXM];
 
-    static ISAP2 isap = new ISAP2(MAXN+2, marks);
+    static ISAP2 isap = new ISAP2(MAXN+2, MAXM*2, marks);
 
     static int readAndSetEdges() {
         for(int i=0; i < M; ++i) {
@@ -90,11 +91,11 @@ public class OptimalMarks {
         System.out.println(out);
     }
 
-    static class ISAP2 extends ISAP {
+    static class ISAP2 extends ISAP_Faster {
         int[] marks;
         boolean[] vis;
-        public ISAP2(int maxn, int[] marks) {
-            super(maxn);
+        public ISAP2(int maxn, int maxe, int[] marks) {
+            super(maxn, maxe);
             this.marks = marks;
             vis = new boolean[maxn];
         }
@@ -102,8 +103,8 @@ public class OptimalMarks {
         public void DFS(int o, int digit) {
             vis[o] = true;
             marks[o] |= digit;
-            for(int i: G[o]) {
-                Edge e = edges.get(i);
+            for(int i: G.forEach(o)) {
+                Edge e = edges[i];
                 if( e.cap > e.flow && !vis[e.to] ) DFS(e.to, digit);
             }
             vis[o] = false;

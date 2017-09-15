@@ -7,7 +7,7 @@
  */
 package lemon.clown.oj.codeforces.Y2017.M09.D15;
 
-import lemon.clown.utils.algorithm.network.ISAP;
+import lemon.clown.utils.algorithm.networkflow.ISAP;
 import lemon.clown.utils.io.Scanner;
 
 public class DeliveryBears {

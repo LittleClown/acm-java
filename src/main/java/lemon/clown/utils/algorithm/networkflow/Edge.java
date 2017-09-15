@@ -1,7 +1,7 @@
 /*~
  *  Created by lemon-clown on 2017/9/15
  */
-package lemon.clown.utils.algorithm.network;
+package lemon.clown.utils.algorithm.networkflow;
 
 /**
  * from:    边的起点

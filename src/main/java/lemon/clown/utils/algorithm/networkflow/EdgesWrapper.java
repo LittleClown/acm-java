@@ -1,9 +1,7 @@
 /*~
  *  Created by lemon-clown on 2017/9/15
  */
-package lemon.clown.utils.algorithm.network;
-
-import lemon.clown.utils.algorithm.network.Edge;
+package lemon.clown.utils.algorithm.networkflow;
 
 /**
  * 封装 edges (重复利用空间）
