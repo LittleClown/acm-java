@@ -19,7 +19,6 @@ public class OptimalMarks {
     static int[] es = new int[MAXM];
     static int[] et = new int[MAXM];
     static int[] mu = new int[MAXN];
-    static int[] mv = new int[MAXN];
     static int[] marks = new int[MAXN];
     static int[] G = new int[MAXM];
 
@@ -52,9 +51,9 @@ public class OptimalMarks {
         K = in.nextInt();
         for(int i=0; i < K; ++i) {
             mu[i] = in.nextInt();
-            mv[i] = in.nextInt();
-            marks[mu[i]] = mv[i];
-            maxMark = Math.max(maxMark, mv[i]);
+            int v = in.nextInt();
+            marks[mu[i]] = v;
+            maxMark = Math.max(maxMark, v);
         }
 
         return maxMark;
@@ -71,15 +70,16 @@ public class OptimalMarks {
 
             final int source = 0;
             final int converge = N+1;
-            for(int digit=1; digit <= maxMark; digit<<=1) {
+            for(int digit=1; digit > 0 && digit <= maxMark; digit<<=1) {
                 isap.init(source, converge, N+2);
                 for(int i=0; i < m; ++i) {
                     isap.addEdge(es[i], et[i], 1);
                     isap.addEdge(et[i], es[i], 1);
                 }
                 for(int i=0; i < K; ++i) {
-                    if( (mv[i]&digit) > 0 ) isap.addEdge(source, mu[i], INF);
-                    else isap.addEdge(mu[i], converge, INF);
+                    int u = mu[i];
+                    if( (marks[u]&digit) > 0 ) isap.addEdge(source, u, INF);
+                    else isap.addEdge(u, converge, INF);
                 }
                 int max_flow = isap.maxFlow();
                 isap.DFS(source, digit);
@@ -89,25 +89,27 @@ public class OptimalMarks {
         }
         System.out.println(out);
     }
-}
 
-class ISAP2 extends ISAP {
-    int[] marks;
-    boolean[] vis;
-    public ISAP2(int maxn, int[] marks) {
-        super(maxn);
-        this.marks = marks;
-        vis = new boolean[maxn];
-    }
-
-    public void DFS(int o, int digit) {
-        vis[o] = true;
-        marks[o] |= digit;
-        for(int i: G[o]) {
-            Edge e = edges.get(i);
-            if( e.cap > e.flow && !vis[e.to] ) DFS(e.to, digit);
+    static class ISAP2 extends ISAP {
+        int[] marks;
+        boolean[] vis;
+        public ISAP2(int maxn, int[] marks) {
+            super(maxn);
+            this.marks = marks;
+            vis = new boolean[maxn];
         }
-        vis[o] = false;
+
+        public void DFS(int o, int digit) {
+            vis[o] = true;
+            marks[o] |= digit;
+            for(int i: G[o]) {
+                Edge e = edges.get(i);
+                if( e.cap > e.flow && !vis[e.to] ) DFS(e.to, digit);
+            }
+            vis[o] = false;
+        }
     }
 }
+
+
 
