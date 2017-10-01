@@ -4,6 +4,7 @@
 package lemon.clown.oj.spoj.optm;
 
 import lemon.clown.utils.algorithm.networkflow.Edge;
+import lemon.clown.utils.algorithm.networkflow.ISAP2;
 import lemon.clown.utils.io.Scanner;
 
 import java.util.Arrays;
@@ -22,7 +23,7 @@ public class OptimalMarks {
     static int[] marks = new int[MAXN];
     static int[] G = new int[MAXM];
 
-    static ISAP2 isap = new ISAP2(MAXN+2, MAXM*2, marks);
+    static ISAP_local isap = new ISAP_local(MAXN+2, MAXM*2, marks);
 
     static int readAndSetEdges() {
         for(int i=0; i < M; ++i) {
@@ -90,10 +91,10 @@ public class OptimalMarks {
         System.out.println(out);
     }
 
-    static class ISAP2 extends lemon.clown.utils.algorithm.networkflow.ISAP2 {
+    static class ISAP_local extends ISAP2 {
         int[] marks;
         boolean[] vis;
-        public ISAP2(int maxn, int maxe, int[] marks) {
+        public ISAP_local(int maxn, int maxe, int[] marks) {
             super(maxn, maxe);
             this.marks = marks;
             vis = new boolean[maxn];

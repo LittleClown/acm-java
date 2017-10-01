@@ -3,6 +3,8 @@
  */
 package lemon.clown.utils.algorithm.networkflow;
 
+import lemon.clown.utils.algorithm.networkflow.ISAP;
+import lemon.clown.utils.algorithm.networkflow.Edge;
 import lemon.clown.utils.datastructure.list.ChainForward;
 import java.util.Arrays;
 

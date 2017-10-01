@@ -6,7 +6,7 @@ package lemon.clown.utils.datastructure.tree.findset;
 import lemon.clown.utils.datastructure.tree.findset.FindSet;
 
 /**
- * 并查集
+ * 启发式并查集
  */
 public class HeuristicFindSet implements FindSet {
     protected int N;

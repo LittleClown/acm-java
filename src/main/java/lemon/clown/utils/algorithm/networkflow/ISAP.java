@@ -3,6 +3,8 @@
  */
 package lemon.clown.utils.algorithm.networkflow;
 
+import lemon.clown.utils.algorithm.networkflow.NetworkFlow;
+
 public abstract class ISAP implements NetworkFlow {
     /**
      * INF:     infinity
