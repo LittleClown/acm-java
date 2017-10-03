@@ -38,8 +38,8 @@ public class Treap<VALUE> extends BST<VALUE, Treap.TreapNode<VALUE>> {
      * @param <NODE>    继承自 TreapNode 的节点
      */
     protected static <NODE extends TreapNode> void link(NODE father, NODE son, int d) {
-        if( d == 0 ) father.linkAsLeftChild(son);
-        else father.linkAsRightChild(son);
+        if( d == 0 ) father.safeLinkAsLeftChild(son);
+        else father.safeLinkAsRightChild(son);
     }
 
     /**

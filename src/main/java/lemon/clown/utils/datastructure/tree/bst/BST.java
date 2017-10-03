@@ -62,7 +62,7 @@ public abstract class BST<VALUE, NODE extends BSTNode<VALUE, NODE>> implements I
         if( o == null ) return 0;
 
         int cnt = 0;
-        for(; o != root;) {
+        for(NODE end=end(); o != end && o.value == x;) {
             NODE target = o;
             o = o.next();
             cnt += erase(target);
@@ -82,9 +82,11 @@ public abstract class BST<VALUE, NODE extends BSTNode<VALUE, NODE>> implements I
         assert root.lson != null: "root.lson is null!!";
         return new Iterator<NODE>() {
             NODE o = root.lson.min();
+            final NODE end = end();
+
             @Override
             public boolean hasNext() {
-                return o != root;
+                return o != end;
             }
 
             @Override
@@ -100,9 +102,11 @@ public abstract class BST<VALUE, NODE extends BSTNode<VALUE, NODE>> implements I
         assert root.lson != null: "root.lson is null!!";
         return ()-> new Iterator<VALUE>() {
             NODE o = root.lson.min();
+            final NODE end = end();
+
             @Override
             public boolean hasNext() {
-                return o != root;
+                return o != end;
             }
 
             @Override
@@ -206,7 +210,7 @@ public abstract class BST<VALUE, NODE extends BSTNode<VALUE, NODE>> implements I
         if( o == null ) return null;
 
         NODE target = null;
-        int delta = comparator.compare(x, o.value);
+        int delta = comparator.compare(o.value, x);
         if( delta < 0 ) target = lower_bound(o.rson, x);
         else {
             target = lower_bound(o.lson, x);
@@ -226,7 +230,7 @@ public abstract class BST<VALUE, NODE extends BSTNode<VALUE, NODE>> implements I
         if( o == null ) return null;
 
         NODE target = null;
-        int delta = comparator.compare(x, o.value);
+        int delta = comparator.compare(o.value, x);
         if( delta <= 0 ) target = upper_bound(o.rson, x);
         else {
             target = upper_bound(o.lson, x);

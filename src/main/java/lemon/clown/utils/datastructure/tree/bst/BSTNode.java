@@ -93,9 +93,9 @@ public abstract class BSTNode<VALUE, NODE extends BSTNode<VALUE, NODE>> implemen
      * @param child
      */
     public void linkAsLeftChild(NODE child) {
-//        assert child != null: "child is null.";
+        assert child != null: "child is null.";
         lson = child;
-        if( child != null ) child.father = (NODE) this;
+        child.father = (NODE) this;
     }
 
     /**
@@ -103,11 +103,30 @@ public abstract class BSTNode<VALUE, NODE extends BSTNode<VALUE, NODE>> implemen
      * @param child
      */
     public void linkAsRightChild(NODE child) {
-//        assert child != null: "child is null.";
+        assert child != null: "child is null.";
         rson = child;
+        child.father = (NODE) this;
+    }
+
+    /**
+     * 连接两个节点，并将当前节点作为父节点，`child` 作为左子节点
+     * 和 @linkAsLeftChild 不同的是，会判断 child 是否为 null
+     * @param child
+     */
+    public void safeLinkAsLeftChild(NODE child) {
+        lson = child;
         if( child != null ) child.father = (NODE) this;
     }
 
+    /**
+     * 连接两个节点，并将当前节点作为父节点，`child` 作为右子节点
+     * 和 @linkAsRightChild 不同的是，会判断 child 是否为 null
+     * @param child
+     */
+    public void safeLinkAsRightChild(NODE child) {
+        rson = child;
+        if( child != null ) child.father = (NODE) this;
+    }
 
     /**
      * 修复节点
@@ -123,7 +142,7 @@ public abstract class BSTNode<VALUE, NODE extends BSTNode<VALUE, NODE>> implemen
 
         if( father.lson == this ) father.linkAsLeftChild(o);
         else father.linkAsRightChild(o);
-        linkAsRightChild(o.lson);
+        safeLinkAsRightChild(o.lson);
         o.linkAsLeftChild((NODE) this);
 
         maintain();
@@ -139,7 +158,7 @@ public abstract class BSTNode<VALUE, NODE extends BSTNode<VALUE, NODE>> implemen
 
         if( father.lson == this ) father.linkAsLeftChild(o);
         else father.linkAsRightChild(o);
-        linkAsLeftChild(o.rson);
+        safeLinkAsLeftChild(o.rson);
         o.linkAsRightChild((NODE) this);
 
         maintain();
