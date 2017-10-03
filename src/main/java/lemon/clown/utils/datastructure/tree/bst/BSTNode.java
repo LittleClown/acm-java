@@ -10,6 +10,15 @@ public abstract class BSTNode<VALUE, NODE extends BSTNode<VALUE, NODE>> implemen
     public NODE lson, rson;
     public VALUE value;
 
+    public void init() {
+        lson = rson = null;
+    }
+
+    public void init(VALUE value) {
+        lson = rson = null;
+        this.value = value;
+    }
+
     /**
      * @return  以当前节点为根节点的子树中，中序遍历第一个节点
      */
@@ -84,9 +93,9 @@ public abstract class BSTNode<VALUE, NODE extends BSTNode<VALUE, NODE>> implemen
      * @param child
      */
     public void linkAsLeftChild(NODE child) {
-        assert child != null: "child is null.";
+//        assert child != null: "child is null.";
         lson = child;
-        child.father = (NODE) this;
+        if( child != null ) child.father = (NODE) this;
     }
 
     /**
@@ -94,9 +103,9 @@ public abstract class BSTNode<VALUE, NODE extends BSTNode<VALUE, NODE>> implemen
      * @param child
      */
     public void linkAsRightChild(NODE child) {
-        assert child != null: "child is null.";
+//        assert child != null: "child is null.";
         rson = child;
-        child.father = (NODE) this;
+        if( child != null ) child.father = (NODE) this;
     }
 
 

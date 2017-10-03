@@ -11,8 +11,12 @@ import java.util.Comparator;
 import java.util.Random;
 
 public class Treap<VALUE> extends BST<VALUE, Treap.TreapNode<VALUE>> {
-    protected Treap(Comparator<VALUE> comparator, BSTNodeFactory<VALUE, TreapNode<VALUE>> factory) {
+    public Treap(Comparator<VALUE> comparator, BSTNodeFactory<VALUE, TreapNode<VALUE>> factory) {
         super(comparator, factory);
+    }
+
+    public Treap(Comparator<VALUE> comparator, int size) {
+        this(comparator, new TreapNodeFactory<VALUE>(size));
     }
 
     @Override
@@ -93,7 +97,6 @@ public class Treap<VALUE> extends BST<VALUE, Treap.TreapNode<VALUE>> {
     public static class TreapNode<VALUE> extends BSTNode<VALUE, TreapNode<VALUE>> {
         private static final Random random = new Random();
         protected int rank;
-        public VALUE value;
 
         public TreapNode() {
             super();
@@ -106,8 +109,58 @@ public class Treap<VALUE> extends BST<VALUE, Treap.TreapNode<VALUE>> {
         }
 
         @Override
+        public void init() {
+            rank = random.nextInt();
+            super.init();
+        }
+
+        @Override
+        public void init(VALUE value) {
+            rank = random.nextInt();
+            super.init(value);
+        }
+
+        @Override
         protected void maintain() {
 
+        }
+    }
+
+    public static class TreapNodeFactory<VALUE> implements BSTNodeFactory<VALUE, TreapNode<VALUE>> {
+        protected int tot;
+        protected final TreapNode<VALUE>[] node_pool;
+
+        public TreapNodeFactory(TreapNode<VALUE>[] node_pool) {
+            tot = 0;
+            this.node_pool = node_pool;
+        }
+
+        public TreapNodeFactory(int size) {
+            tot = 0;
+            node_pool = new TreapNode[size];
+            for(int i=0; i < size; ++i) node_pool[i] = new TreapNode<>();
+        }
+
+        @Override
+        public TreapNode<VALUE> newNode() {
+            assert tot < node_pool.length: "memory not enough.";
+            TreapNode<VALUE> target = node_pool[tot++];
+            target.init();
+            return target;
+        }
+
+        @Override
+        public TreapNode<VALUE> newNode(VALUE value) {
+            assert tot < node_pool.length: "memory not enough.";
+            TreapNode<VALUE> target = node_pool[tot++];
+            target.init();
+            target.value = value;
+            return target;
+        }
+
+        @Override
+        public void clear() {
+            tot = 0;
         }
     }
 }

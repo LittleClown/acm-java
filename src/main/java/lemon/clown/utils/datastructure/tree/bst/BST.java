@@ -96,6 +96,24 @@ public abstract class BST<VALUE, NODE extends BSTNode<VALUE, NODE>> implements I
         };
     }
 
+    public Iterable<VALUE> values() {
+        assert root.lson != null: "root.lson is null!!";
+        return ()-> new Iterator<VALUE>() {
+            NODE o = root.lson.min();
+            @Override
+            public boolean hasNext() {
+                return o != root;
+            }
+
+            @Override
+            public VALUE next() {
+                NODE target = o;
+                o = o.next();
+                return target.value;
+            }
+        };
+    }
+
     /**
      * 将 BST 的所有节点的元素值以中序遍历的结果保存到 targets 数组中
      * @param targets   Out:    中序遍历的结果
